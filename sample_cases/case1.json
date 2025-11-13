@@ -1,0 +1,100 @@
+[
+  {
+    "id": "evt-001",
+    "timestamp": "2024-11-13T09:15:23Z",
+    "source": "File System",
+    "type": "File Created",
+    "summary": "Document 'project-plan.docx' created in C:\\Users\\Alice\\Documents",
+    "path": "C:\\Users\\Alice\\Documents\\project-plan.docx"
+  },
+  {
+    "id": "evt-002",
+    "timestamp": "2024-11-13T09:16:45Z",
+    "source": "System",
+    "type": "Process Start",
+    "summary": "Microsoft Word launched (PID: 4521)",
+    "path": "C:\\Program Files\\Microsoft Office\\Office16\\WINWORD.EXE"
+  },
+  {
+    "id": "evt-003",
+    "timestamp": "2024-11-13T09:18:12Z",
+    "source": "Network",
+    "type": "HTTP Request",
+    "summary": "GET https://api.company.com/users/alice/settings",
+    "path": "api.company.com"
+  },
+  {
+    "id": "evt-004",
+    "timestamp": "2024-11-13T09:20:33Z",
+    "source": "User Activity",
+    "type": "User Login",
+    "summary": "User 'alice' authenticated via SSO",
+    "metadata": { "authMethod": "SSO", "ipAddress": "192.168.1.45" }
+  },
+  {
+    "id": "evt-005",
+    "timestamp": "2024-11-13T09:22:05Z",
+    "source": "Memory",
+    "type": "Memory Allocation",
+    "summary": "Application allocated 128MB RAM",
+    "metadata": { "processName": "chrome.exe", "memoryMB": 128 }
+  },
+  {
+    "id": "evt-006",
+    "timestamp": "2024-11-13T09:25:41Z",
+    "source": "File System",
+    "type": "File Modified",
+    "summary": "Document 'project-plan.docx' modified",
+    "path": "C:\\Users\\Alice\\Documents\\project-plan.docx"
+  },
+  {
+    "id": "evt-007",
+    "timestamp": "2024-11-13T09:28:17Z",
+    "source": "Network",
+    "type": "HTTP POST",
+    "summary": "POST https://api.company.com/documents/upload",
+    "path": "api.company.com",
+    "metadata": { "fileSize": "2.4MB", "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document" }
+  },
+  {
+    "id": "evt-008",
+    "timestamp": "2024-11-13T09:30:59Z",
+    "source": "System",
+    "type": "Process Terminated",
+    "summary": "Microsoft Word closed (PID: 4521)",
+    "path": "C:\\Program Files\\Microsoft Office\\Office16\\WINWORD.EXE"
+  },
+  {
+    "id": "evt-009",
+    "timestamp": "2024-11-13T09:33:22Z",
+    "source": "File System",
+    "type": "File Accessed",
+    "summary": "PDF file 'presentation.pdf' read from USB drive",
+    "path": "E:\\Documents\\presentation.pdf",
+    "metadata": { "deviceType": "USB", "readOnly": true }
+  },
+  {
+    "id": "evt-010",
+    "timestamp": "2024-11-13T09:36:48Z",
+    "source": "Network",
+    "type": "DNS Query",
+    "summary": "DNS lookup for 'external-service.net'",
+    "metadata": { "resolvedIP": "203.0.113.42", "queryType": "A" }
+  },
+  {
+    "id": "evt-011",
+    "timestamp": "2024-11-13T09:40:15Z",
+    "source": "User Activity",
+    "type": "Screen Lock",
+    "summary": "Workstation locked by user 'alice'",
+    "metadata": { "lockReason": "manual" }
+  },
+  {
+    "id": "evt-012",
+    "timestamp": "2024-11-13T09:45:03Z",
+    "source": "User Activity",
+    "type": "User Logout",
+    "summary": "User 'alice' logged out",
+    "metadata": { "sessionDuration": "29m40s" }
+  }
+]

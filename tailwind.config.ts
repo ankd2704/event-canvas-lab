@@ -47,6 +47,15 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        timeline: {
+          bg: "hsl(var(--timeline-bg))",
+        },
+        panel: {
+          bg: "hsl(var(--panel-bg))",
+        },
+        hover: {
+          bg: "hsl(var(--hover-bg))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

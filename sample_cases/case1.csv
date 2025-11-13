@@ -1,0 +1,13 @@
+Date/Time,Type,Description,Source,File Name
+2024-11-13 09:15:23,File Created,Document 'project-plan.docx' created,File System,C:\Users\Alice\Documents\project-plan.docx
+2024-11-13 09:16:45,Process Start,Microsoft Word launched (PID: 4521),System,C:\Program Files\Microsoft Office\Office16\WINWORD.EXE
+2024-11-13 09:18:12,HTTP Request,GET https://api.company.com/users/alice/settings,Network,api.company.com
+2024-11-13 09:20:33,User Login,User 'alice' authenticated via SSO,User Activity,
+2024-11-13 09:22:05,Memory Allocation,Application allocated 128MB RAM,Memory,chrome.exe
+2024-11-13 09:25:41,File Modified,Document 'project-plan.docx' modified,File System,C:\Users\Alice\Documents\project-plan.docx
+2024-11-13 09:28:17,HTTP POST,POST https://api.company.com/documents/upload,Network,api.company.com
+2024-11-13 09:30:59,Process Terminated,Microsoft Word closed (PID: 4521),System,C:\Program Files\Microsoft Office\Office16\WINWORD.EXE
+2024-11-13 09:33:22,File Accessed,PDF file 'presentation.pdf' read from USB drive,File System,E:\Documents\presentation.pdf
+2024-11-13 09:36:48,DNS Query,DNS lookup for 'external-service.net',Network,
+2024-11-13 09:40:15,Screen Lock,Workstation locked by user 'alice',User Activity,
+2024-11-13 09:45:03,User Logout,User 'alice' logged out,User Activity,
