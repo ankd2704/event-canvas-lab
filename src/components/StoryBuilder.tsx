@@ -76,66 +76,117 @@ export const StoryBuilder = ({ selectedEvent }: StoryBuilderProps) => {
     toast.success('Story reordered');
   };
 
+  // ---------- FIXED exportToPDF: print-friendly, white background, readable ----------
   const exportToPDF = async () => {
     if (storyItems.length === 0) {
       toast.error('No events in story to export');
       return;
     }
 
-    // Generate PDF content
-    const pdfContent = document.createElement('div');
-    pdfContent.style.padding = '20px';
-    pdfContent.style.fontFamily = 'Arial, sans-serif';
-    pdfContent.innerHTML = `
-      <h1 style="color: #06b6d4; border-bottom: 2px solid #06b6d4; padding-bottom: 10px;">
+    // Build a clean, self-contained report DOM (white background, dark text)
+    const report = document.createElement('div');
+    report.style.width = '800px';
+    report.style.margin = '0 auto';
+    report.style.padding = '24px';
+    report.style.background = '#ffffff';
+    report.style.color = '#0f172a';
+    report.style.fontFamily = "Inter, Arial, sans-serif";
+    report.style.lineHeight = '1.5';
+    report.style.fontSize = '12pt';
+
+    // Header
+    report.innerHTML = `
+      <h1 style="color:#06b6d4; font-size:20pt; margin-bottom:8px;
+                 border-bottom: 3px solid #06b6d4; padding-bottom:6px;">
         TimelineFusion Event Reconstruction Report
       </h1>
+
       <p><strong>Author:</strong> ${author || 'Unknown'}</p>
       <p><strong>Generated:</strong> ${new Date().toISOString()}</p>
-      <p><strong>Events:</strong> ${storyItems.length}</p>
-      <p><strong>Story Hash (SHA-256):</strong></p>
-      <p style="font-family: monospace; font-size: 10px; word-break: break-all; background: #f5f5f5; padding: 10px;">
+      <p><strong>Total Events:</strong> ${storyItems.length}</p>
+
+      <p style="margin-top:16px;"><strong>Combined Story Hash (SHA-256):</strong></p>
+      <div style="
+        background:#f1f5f9;
+        padding:10px;
+        border:1px solid #e2e8f0;
+        border-radius:6px;
+        font-family:monospace;
+        word-break:break-all;">
         ${storyHash}
-      </p>
-      <hr style="margin: 20px 0;" />
-      ${storyItems.map((item, index) => `
-        <div style="margin-bottom: 30px; page-break-inside: avoid;">
-          <h2 style="color: #d946ef;">Event ${index + 1}: ${item.event.type}</h2>
-          <p><strong>Summary:</strong> ${item.event.summary}</p>
-          <p><strong>Timestamp:</strong> ${item.event.timestamp}</p>
-          <p><strong>Source:</strong> ${item.event.source}</p>
-          ${item.event.path ? `<p><strong>Path:</strong> ${item.event.path}</p>` : ''}
-          ${item.note ? `<p><strong>Investigator Note:</strong> ${item.note}</p>` : ''}
-          <p><strong>Event Hash (SHA-256):</strong></p>
-          <p style="font-family: monospace; font-size: 9px; word-break: break-all; background: #f9f9f9; padding: 8px;">
-            ${item.hash}
-          </p>
-          <details>
-            <summary style="cursor: pointer; color: #06b6d4;">Raw JSON</summary>
-            <pre style="font-size: 8px; background: #f9f9f9; padding: 10px; overflow-x: auto;">
-${JSON.stringify(item.event, null, 2)}
-            </pre>
-          </details>
-        </div>
-      `).join('')}
+      </div>
+
+      <hr style="margin:24px 0; border:0; border-top:1px solid #cbd5e1;" />
     `;
 
+    // Add event blocks
+    storyItems.forEach((item, index) => {
+      const block = document.createElement('div');
+      block.style.marginBottom = '28px';
+      block.style.pageBreakInside = 'avoid';
+
+      // Use JSON.stringify for raw and ensure it's readable
+      const rawJson = JSON.stringify(item.event, null, 2);
+
+      block.innerHTML = `
+        <h2 style="color:#d946ef; font-size:15pt; margin-bottom:4px;">
+          Event ${index + 1}: ${item.event.type}
+        </h2>
+
+        <p><strong>Summary:</strong> ${item.event.summary || ''}</p>
+        <p><strong>Timestamp:</strong> ${item.event.timestamp || ''}</p>
+        <p><strong>Source:</strong> ${item.event.source || ''}</p>
+        ${item.event.path ? `<p><strong>Path:</strong> ${item.event.path}</p>` : ''}
+        ${item.note ? `<p><strong>Investigator Note:</strong> ${item.note}</p>` : ''}
+
+        <p style="margin-top:8px;"><strong>Event Hash (SHA-256):</strong></p>
+        <div style="
+          background:#f8fafc;
+          padding:10px;
+          border:1px solid #e2e8f0;
+          border-radius:6px;
+          font-family:monospace;
+          font-size:10pt;
+          word-break:break-all;">
+          ${item.hash}
+        </div>
+
+        <p style="margin-top:12px;"><strong>Raw JSON</strong></p>
+        <pre style="
+          background:#f3f4f6;
+          padding:12px;
+          border-radius:6px;
+          border:1px solid #e2e8f0;
+          font-size:10pt;
+          font-family:monospace;
+          white-space:pre-wrap;
+          word-break:break-word;">${rawJson}</pre>
+      `;
+
+      report.appendChild(block);
+    });
+
+    // html2pdf options: ensure white background is used and high-quality rendering
     const opt = {
       margin: 10,
-      filename: `timeline-fusion-report-${Date.now()}.pdf`,
+      filename: `timelinefusion-report-${Date.now()}.pdf`,
       image: { type: 'jpeg' as const, quality: 0.98 },
-      html2canvas: { scale: 2 },
+      html2canvas: {
+        scale: 2,
+        backgroundColor: '#ffffff'
+      },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' as const }
     };
 
     try {
-      await html2pdf().set(opt).from(pdfContent).save();
+      await html2pdf().set(opt).from(report).save();
       toast.success('PDF exported successfully');
     } catch (error) {
       console.error('PDF export error:', error);
       toast.error('Failed to export PDF');
     }
   };
+  // -------------------------------------------------------------------------------
 
   return (
     <Card className="h-full border-border bg-card shadow-lg">
